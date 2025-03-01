@@ -1,9 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.CoreSystem;
 using UnityEngine;
 
 public class PlayerAbilityState : PlayerState
 {
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+    private CollisionSenses CollisionSenses
+    {
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
+    }
+    private CollisionSenses collisionSenses;
+
     protected bool isAbilityDone;
 
     private bool isGrounded;
@@ -15,7 +27,7 @@ public class PlayerAbilityState : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
+        isGrounded = CollisionSenses.Ground;
     }
 
     public override void Enter()
@@ -36,7 +48,7 @@ public class PlayerAbilityState : PlayerState
 
         if (isAbilityDone)
         {
-            if(isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
+            if(isGrounded && Movement.CurrentVelocity.y < 0.01f)
             {
                 stateMachine.ChangeState(player.IdleState);
             }

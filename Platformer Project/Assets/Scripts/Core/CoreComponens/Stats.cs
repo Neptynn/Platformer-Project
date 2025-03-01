@@ -1,32 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Stats : CoreComponent
+namespace Platformer.CoreSystem
 {
-    [SerializeField] private float maxHealth;
-    private float currentHealth;
-
-    protected override void Awake()
+    public class Stats : CoreComponent
     {
-        base.Awake();
+        public event Action OnHealthZero;
 
-        currentHealth = maxHealth;
-    }
 
-    public void DecreaseHealth(float amount)
-    {
-        currentHealth -= amount;
+        [SerializeField] private float maxHealth;
+        private float currentHealth;
 
-        if(currentHealth <= 0)
+        protected override void Awake()
         {
-            currentHealth = 0;
-            Debug.Log("Health = 0");
-        }
-    }
+            base.Awake();
 
-    public void IncreaseHealth(float amount)
-    {
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);  
+            currentHealth = maxHealth;
+        }
+
+        public void DecreaseHealth(float amount)
+        {
+            currentHealth -= amount;
+
+            if(currentHealth <= 0)
+            {
+                currentHealth = 0;
+
+                OnHealthZero?.Invoke();
+
+                Debug.Log("Health = 0");
+            }
+        }
+
+        public void IncreaseHealth(float amount)
+        {
+            currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);  
+        }
     }
 }

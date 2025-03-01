@@ -1,9 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.CoreSystem;
 using UnityEngine;
 
 public class IdleState : State
 {
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+    private CollisionSenses CollisionSenses
+    {
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
+    }
+    private CollisionSenses collisionSenses;
+
     protected D_IdleState stateData;
 
     protected bool flipAfterIdle;
@@ -28,7 +40,7 @@ public class IdleState : State
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement.SetVelocityX(0f);
         isIdleTimeOver = false;
         SetRandomTime();
     }
@@ -39,7 +51,7 @@ public class IdleState : State
 
         if(flipAfterIdle)
         {
-            core.Movement.Flip();
+            Movement.Flip();
         }
     }
 
@@ -47,7 +59,7 @@ public class IdleState : State
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement.SetVelocityX(0f);
 
         if (Time.time >= startTime + idleTime)
         {

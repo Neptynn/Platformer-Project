@@ -1,90 +1,99 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
+using Unity.VisualScripting;
+using Platformer.CoreSystem;
+using Timer = Platformer.Utilities.Timer;
 
-public class Weapon : MonoBehaviour
+namespace Platformer.Weapons
 {
-    [SerializeField] protected SO_WeaponData weaponData;
-
-    protected Animator baseAnimator;
-    protected Animator weaponAnimator;
-
-    protected PlayerAttackState state;
-
-    protected Core core;
-
-    protected int attackCounter;
-
-    protected virtual void Awake()
+    public class Weapon : MonoBehaviour
     {
-        baseAnimator = transform.Find("Base").GetComponent<Animator>();
-        weaponAnimator = transform.Find("Weapon").GetComponent<Animator>();
+        [SerializeField] private float attackCounterResetCooldown;
+        public WeaponDataSO Data{get; private set;}
 
-        gameObject.SetActive(false);
-    }
-
-    public virtual void EnterWeapon()
-    {
-        gameObject.SetActive(true);
-
-        baseAnimator.SetBool("attack", true);
-        weaponAnimator.SetBool("attack", true);
-
-        if(attackCounter >= weaponData.amountsOfAttacks) 
+        public int CurrentAttackCounter
         {
-            attackCounter = 0;
+            get => currentAttackCounter;
+            private set => currentAttackCounter = value >= Data.NumberOfAttacks ? 0 : value;
         }
 
-        baseAnimator.SetInteger("attackCounter", attackCounter);
-        weaponAnimator.SetInteger("attackCounter", attackCounter);
+        public event Action OnEnter;
+        public event Action OnExit;
+        
+        private Animator anim;
+        public GameObject BaseGameObject { get; private set;}
+        public GameObject WeaponSpriteGameObject { get; private set;}
+        
+        public AnimationEventHandler EventHandler{get; private set;}
+
+        public Core Core{get; private set;}
+        
+        private int currentAttackCounter;
+
+        private Timer attackCounterResetTimer;
+        
+        public void Enter()
+        {
+            print($"{transform.name} enter"); 
+            
+            attackCounterResetTimer.StopTimer();
+            
+            anim.SetBool("active", true);
+            anim.SetInteger("counter", CurrentAttackCounter);
+            
+            OnEnter?.Invoke();
+        }
+
+        public void SetCore(Core core)
+        {
+            Core = core;
+        }
+
+        public void SetData(WeaponDataSO data)
+        {
+            Data = data;
+        }
+        
+        private void Exit()
+        {
+            anim.SetBool("active", false);
+
+            CurrentAttackCounter++;
+            attackCounterResetTimer.StartTimer();
+            
+            OnExit?.Invoke();
+        }
+        
+        private void Awake()
+        {
+            BaseGameObject = transform.Find("Base").gameObject;
+            WeaponSpriteGameObject = transform.Find("WeaponSprite").gameObject;
+            
+            anim = BaseGameObject.GetComponent<Animator>();
+            EventHandler = BaseGameObject.GetComponent<AnimationEventHandler>();
+
+            attackCounterResetTimer = new Timer(attackCounterResetCooldown);
+            
+        }
+
+        private void Update()
+        {
+            attackCounterResetTimer.Tick();
+        }
+        
+        private void ResetAttackCounter() => CurrentAttackCounter = 0;
+
+        private void OnEnable()
+        {
+            EventHandler.OnFinished += Exit;
+            attackCounterResetTimer.OnTimerDone += ResetAttackCounter;
+        }
+
+        private void OnDisable()
+        {
+            EventHandler.OnFinished -= Exit;
+            attackCounterResetTimer.OnTimerDone -= ResetAttackCounter;
+        }
+
     }
-
-    public virtual void ExitWeapon()
-    {
-        baseAnimator.SetBool("attack", false);
-        weaponAnimator.SetBool("attack", false);
-
-        attackCounter++;
-
-        gameObject.SetActive(false);
-    }
-
-    #region Animation Triggers
-
-    public virtual void AnimationFinishTrigger()
-    {
-        state.AnimationFinishTrigger();
-    }
-
-    public virtual void AnimationStartMovementTrigger()
-    {
-        state.SetPlayerVelocity(weaponData.movementSpeed[attackCounter]);
-    }
-
-    public virtual void AnimationStopMovementTrigger() 
-    {
-        state.SetPlayerVelocity(0);
-    }
-
-    public virtual void AnimationTurnOffFlipTrigger()
-    {
-        state.SetFlipCheck(false);
-    }
-
-    public virtual void AnimationTurnOnFlipTrigger()
-    {
-        state.SetFlipCheck(true);
-    }
-
-    public virtual void AnimationActionTrigger() { }
-
-
-    #endregion
-
-    public void InitialazeWeapon(PlayerAttackState state, Core core)
-    {
-        this.state = state;
-        this.core = core;
-    }
-
 }

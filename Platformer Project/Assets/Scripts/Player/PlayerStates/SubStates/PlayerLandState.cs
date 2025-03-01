@@ -24,7 +24,7 @@ public class PlayerLandState : PlayerGroundedStates
             }
             else if (!isAnimationFinished)
             {
-                core.Movement.SetVelocityX(0f);
+                Movement?.SetVelocityX(0f);
             }
 
         }

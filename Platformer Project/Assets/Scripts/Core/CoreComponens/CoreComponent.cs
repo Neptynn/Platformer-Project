@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CoreComponent : MonoBehaviour, ILogicUpdate
+namespace Platformer.CoreSystem
 {
-    protected Core core;
-
-    protected virtual void Awake()
+    public class CoreComponent : MonoBehaviour, ILogicUpdate
     {
-        core = transform.parent.GetComponent<Core>();
+        protected Core core;
 
-        if (core == null )
+        protected virtual void Awake()
         {
-            Debug.LogError("There is no Core on the parent");
-            
-        }
-        core.AddComponent(this);
-    }
+            core = transform.parent.GetComponent<Core>();
 
-    public virtual void LogicUpdate(){ }
+            if (core == null )
+            {
+                Debug.LogError("There is no Core on the parent");
+            
+            }
+            core.AddComponent(this);
+        }
+
+        public virtual void LogicUpdate(){ }
+    }
 }

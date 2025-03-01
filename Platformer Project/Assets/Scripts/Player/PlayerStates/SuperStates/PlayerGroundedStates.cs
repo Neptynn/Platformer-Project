@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.CoreSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,18 @@ public class PlayerGroundedStates : PlayerState
     protected int yInput;
 
     protected bool isTouchingCeiling;
+
+    protected Movement Movement 
+    { 
+        get => movement ??= core.GetCoreComponent<Movement>(); 
+    }
+    private Movement movement;
+
+    private CollisionSenses CollisionSenses
+    {
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();       
+    }
+    private CollisionSenses collisionSenses;
 
     private bool jumpInput;
     private bool grabInput;
@@ -24,10 +37,13 @@ public class PlayerGroundedStates : PlayerState
     {
         base.DoChecks();
 
-        isGrounded = core.CollisionSenses.Ground;
-        isTouchingWall = core.CollisionSenses.WallFront;
-        isTouchingLadge = core.CollisionSenses.LedgeHorisonal;
-        isTouchingCeiling = core.CollisionSenses.Ceiling;
+        if (CollisionSenses)
+        {
+            isGrounded = CollisionSenses.Ground;
+            isTouchingWall = CollisionSenses.WallFront;
+            isTouchingLadge = CollisionSenses.LedgeHorisonal;
+            isTouchingCeiling = CollisionSenses.Ceiling;
+        }
     }
 
     public override void Enter()
@@ -61,16 +77,16 @@ public class PlayerGroundedStates : PlayerState
         {
             stateMachine.ChangeState(player.SecondaryAttackState);
         }
-        else if (jumpInput && player.JumpState.CanJump())
+        else if (jumpInput && player.JumpState.CanJump() && !isTouchingCeiling)
         {
             stateMachine.ChangeState(player.JumpState);
         }
-        else if(!isGrounded)
+        else if (!isGrounded)
         {
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         }
-        else if(isTouchingWall && grabInput && isTouchingLadge) 
+        else if (isTouchingWall && grabInput && isTouchingLadge)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }

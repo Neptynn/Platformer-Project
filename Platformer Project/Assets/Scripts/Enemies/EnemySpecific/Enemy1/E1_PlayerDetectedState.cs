@@ -41,7 +41,7 @@ public class E1_PlayerDetectedState : PlayerDetectedState
         }
         else if(!isDetectingLerge)
         {
-            core.Movement.Flip();
+            Movement.Flip();
             stateMachine.ChangeState(enemy.moveState);
         }
 

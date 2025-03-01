@@ -1,9 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.CoreSystem;
 using UnityEngine;
 
 public class MeleeAttackState : AttackState
 {
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+    private CollisionSenses CollisionSenses
+    {
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
+    }
+    private CollisionSenses collisionSenses;
+
     protected D_MeleeAttack stateData;
     public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttack stateData) : base(entity, stateMachine, animBoolName, attackPosition)
     {
@@ -55,11 +67,11 @@ public class MeleeAttackState : AttackState
                 damageable.Damage(stateData.attackDamage);
             }
 
-            IKnockbackable knockbackable = collider.GetComponent<IKnockbackable>();
+            IKnockBackable knockBackable = collider.GetComponent<IKnockBackable>();
 
-            if(knockbackable != null)
+            if(knockBackable != null)
             {
-                knockbackable.Knockback(stateData.knockbackAngle, stateData.knockbackStrength, core.Movement.FacingDirection);
+                knockBackable.KnockBack(stateData.knockbackAngle, stateData.knockbackStrength, Movement.FacingDirection);
             }
         }
     }
