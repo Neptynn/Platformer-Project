@@ -16,8 +16,11 @@ namespace Platformer.Weapons
         
         public List<Type> componentDependencies = new List<Type>();
 
+        private Animator anim;
+        
         private void Start()
         {
+            anim = GetComponentInParent<Animator>();
             GenerateWeapon(data);
         }
 
@@ -63,6 +66,8 @@ namespace Platformer.Weapons
             {
                 Destroy(weaponComponent);                
             }
+            
+            anim.runtimeAnimatorController = data.AnimatorController;
         }
     }
 }

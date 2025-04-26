@@ -54,6 +54,9 @@ public class Player : MonoBehaviour
     #region Unity Callback Functions
     private void Awake()
     {
+        PlayerPrefs.DeleteKey("Points");
+        PlayerPrefs.DeleteKey("ReducePoints");
+        
         Core = GetComponentInChildren<Core>();
 
         primaryWeapon = transform.Find("PrimaryWeapon").GetComponent<Weapon>();

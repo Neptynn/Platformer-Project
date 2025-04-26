@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Platformer.CoreSystem
@@ -14,22 +15,32 @@ namespace Platformer.CoreSystem
 
         public void Die()
         {
+
+            if (Stats.PointData != null)
+            {
+                int currentPoints = PlayerPrefs.GetInt("Points", 0);
+                currentPoints += (int)Stats.Point.MaxValue;
+                PlayerPrefs.SetInt("Points", currentPoints);
+                PlayerPrefs.Save();
+                Debug.Log(PlayerPrefs.GetInt("Points", 0));
+            }
+
             foreach (var particle in deathParticles) 
             {
                 ParticleManager.StartParticles(particle);
             }
-
+            
             core.transform.parent.gameObject.SetActive(false);  
         }
-
+        
         private void OnEnable()
         {
-            Stats.OnHealthZero += Die;
+            Stats.Health.OnCurrentValueZero += Die;
         }
 
         private void OnDisable()
         {
-            Stats.OnHealthZero -= Die;
+            Stats.Health.OnCurrentValueZero -= Die;
         }
 
     }

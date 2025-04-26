@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Platformer.CoreSystem;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using System;
 
 public class Entity : MonoBehaviour
 {
+    
     protected Movement Movement
     {
         get => movement ??= Core.GetCoreComponent<Movement>();
@@ -36,11 +38,15 @@ public class Entity : MonoBehaviour
 
     protected bool isStunned;
     protected bool isDead;
+    
+    protected Stats stats;
 
     public virtual void Awake()
     {
         Core = GetComponentInChildren<Core>();
 
+        stats = Core.GetCoreComponent<Stats>();
+        
         currentHealth = entityData.maxHealth;
         currentStunResistance = entityData.stunResistance;
 

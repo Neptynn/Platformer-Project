@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.CoreSystem;
 using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "newEntityData", menuName = "Data/Entity Data/Base Data")]
-public class D_Entity : ScriptableObject
+public class D_Entity : ScriptableObject, IHealthData, IPoiseData, IPointData
 {
     public float maxHealth = 30f;
 
@@ -17,13 +18,25 @@ public class D_Entity : ScriptableObject
     public float minAgroDistance = 3f;
     public float maxAgroDistance = 4f;
 
-    public float stunResistance = 3f;
+    public float stunResistance = 20f;
+    public float stunRecoveryRate = 2f;
     public float stunRecoveryTime = 2f;
 
     public float closeRangeActionDistance = 1f;
+
+    public float pointCost = 50f;
+    public float pointReduce = 10f;
 
     public GameObject hitParticle;
 
     public LayerMask whatIsGround;
     public LayerMask whatIsPlayer;
+    
+    
+    
+    public float MaxHealth => maxHealth;
+    public float Poise => stunResistance;
+    public float PoiseRecoveryRate => stunRecoveryRate;
+    public float Point => pointCost;
+    public float PointReduce => pointReduce;
 }

@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.CoreSystem;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
-public class PlayerData : ScriptableObject
+public class PlayerData : ScriptableObject, IHealthData
 {
+    [Header("Stats Data")]
+    public float maxHealth = 100f;
+    
     [Header("Move State")]
     public float movementVelocity = 10f;
 
@@ -45,4 +49,8 @@ public class PlayerData : ScriptableObject
     public float crouchMovementVelocity = 5f;
     public float crouchColliderHeight = 0.8f;
     public float standColliderHeight = 1.6f;
+    
+    [HideInInspector]
+    public float MaxHealth => maxHealth;
+
 }

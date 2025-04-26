@@ -15,6 +15,9 @@ public class MeleeAttackState : AttackState
         get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
     }
     private CollisionSenses collisionSenses;
+    
+    private Stats Stats  => stats ??= core.GetCoreComponent<Stats>(); 
+    private Stats stats;
 
     protected D_MeleeAttack stateData;
     public MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttack stateData) : base(entity, stateMachine, animBoolName, attackPosition)
@@ -65,6 +68,13 @@ public class MeleeAttackState : AttackState
             if(damageable != null)
             {
                 damageable.Damage(stateData.attackDamage);
+                
+                int reducePoints = PlayerPrefs.GetInt("ReducePoints", 0);
+                reducePoints -= (int)Stats.PointReduce.MaxValue;
+                PlayerPrefs.SetInt("ReducePoints", reducePoints);
+                PlayerPrefs.Save();
+                
+                Debug.Log(PlayerPrefs.GetInt("Points", 0));
             }
 
             IKnockBackable knockBackable = collider.GetComponent<IKnockBackable>();

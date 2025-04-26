@@ -22,6 +22,10 @@ public class PlayerInputHandler : MonoBehaviour
     public bool DashInputStop { get; private set; }
 
     public bool[] AttackInputs { get; private set; }
+    
+    public bool SaveInput { get; private set; }
+    public bool LoadInput { get; private set; }
+    
 
     [SerializeField]
     private float inputHoldTime = 0.2f;
@@ -68,6 +72,32 @@ public class PlayerInputHandler : MonoBehaviour
             AttackInputs[(int)CombatInputs.secondary] = false;
         }
     }
+    
+    
+    public void OnSave(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            SaveInput = true;
+        }
+        if(context.canceled)
+        {
+            SaveInput = false;
+        }
+    }
+    public void OnLoad(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            LoadInput = true;
+        }
+        if(context.canceled)
+        {
+            LoadInput = false;
+        }
+    }
+    
+    
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 namespace Platformer.CoreSystem
 {
@@ -27,8 +28,7 @@ namespace Platformer.CoreSystem
         {
             CurrentVelocity = RB.velocity;
         }
-
-
+        
         #region Set Functions
 
         public void SetVelocityZero()
@@ -86,5 +86,7 @@ namespace Platformer.CoreSystem
         }
 
         #endregion
+        
     }
+    
 }

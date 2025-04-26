@@ -1,5 +1,4 @@
-﻿using UnityEditor.SceneManagement;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Platformer.CoreSystem
 {
@@ -7,22 +6,22 @@ namespace Platformer.CoreSystem
     {
         [SerializeField] private GameObject damageParticles;
 
-        private CoreComp<Stats> stats;
-        private CoreComp<ParticleManager> particleManager;
+        private Stats stats;
+        private ParticleManager particleManager;
         
         public void Damage(float amount)
         {
-            Debug.Log(core.transform.parent.name + " Damaged!");
-            stats.Comp?.DecreaseHealth(amount);
-            particleManager.Comp?.StartParticlesWithRandomRotation(damageParticles);
+            //Debug.Log(core.transform.parent.name + " Damaged!");
+            stats.Health.Decrease(amount);
+            particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
 
         protected override void Awake()
         {
             base.Awake();
             
-            stats = new CoreComp<Stats>(core);
-            particleManager = new CoreComp<ParticleManager>(core);
+            stats = core.GetCoreComponent<Stats>()  ;
+            particleManager = core.GetCoreComponent<ParticleManager>();
         }
     }
 }
