@@ -62758,6 +62758,14 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: 43128bf87935b2e4da1458a9b701a1be, type: 2}
+    - target: {fileID: 7576278609115259479, guid: 5f4c8304eed217d4582cec4fdba67790, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -66149181, guid: bcf3e43521b72234ab2700c962ee84ef, type: 3}
+    - target: {fileID: 7576278609115259479, guid: 5f4c8304eed217d4582cec4fdba67790, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7004023338045653320, guid: 5f4c8304eed217d4582cec4fdba67790, type: 3}
     - {fileID: 4253099831533900013, guid: 5f4c8304eed217d4582cec4fdba67790, type: 3}

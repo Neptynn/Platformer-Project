@@ -13,8 +13,29 @@ MonoBehaviour:
   m_Name: Bow_1
   m_EditorClassIdentifier: 
   <AnimatorController>k__BackingField: {fileID: 9100000, guid: d087a0aa9903dfc44a789ff24a97d5ed, type: 2}
-  <NumberOfAttacks>k__BackingField: 0
-  <ComponentData>k__BackingField: []
+  <NumberOfAttacks>k__BackingField: 1
+  <ComponentData>k__BackingField:
+  - rid: 4545688435959529473
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4545688435959529473
+      type: {class: WeaponSpriteData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
+      data:
+        name: WeaponSpriteData
+        attackData:
+        - name: Attack 1
+          <PhaseSprites>k__BackingField:
+          - <Phase>k__BackingField: 0
+            <Sprites>k__BackingField:
+            - {fileID: 1331380303, guid: f3587b6953001624389cefb03b513567, type: 3}
+            - {fileID: 1316838148, guid: f3587b6953001624389cefb03b513567, type: 3}
+          - <Phase>k__BackingField: 1
+            <Sprites>k__BackingField:
+            - {fileID: 1316838148, guid: f3587b6953001624389cefb03b513567, type: 3}
+          - <Phase>k__BackingField: 2
+            <Sprites>k__BackingField:
+            - {fileID: 538404878, guid: f3587b6953001624389cefb03b513567, type: 3}
+            - {fileID: 1092771143, guid: f3587b6953001624389cefb03b513567, type: 3}
+            - {fileID: -1678746768, guid: f3587b6953001624389cefb03b513567, type: 3}
+            - {fileID: 1761313206, guid: f3587b6953001624389cefb03b513567, type: 3}

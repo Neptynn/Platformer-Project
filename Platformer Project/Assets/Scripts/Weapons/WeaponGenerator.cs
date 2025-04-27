@@ -20,7 +20,7 @@ namespace Platformer.Weapons
         
         private void Start()
         {
-            anim = GetComponentInParent<Animator>();
+            anim = GetComponentInChildren<Animator>();
             GenerateWeapon(data);
         }
 
