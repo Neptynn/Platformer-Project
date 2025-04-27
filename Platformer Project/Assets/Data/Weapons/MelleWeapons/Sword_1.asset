@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59b1d7cbfe94bb18b99c116b7f4c43c, type: 3}
   m_Name: Sword_1
   m_EditorClassIdentifier: 
+  <Icon>k__BackingField: {fileID: 264998466, guid: 7698f902a8e73cb4b88c4738f7fb0ff5, type: 3}
+  <Name>k__BackingField: Sword
+  <Description>k__BackingField: Sword
   <AnimatorController>k__BackingField: {fileID: 9100000, guid: 33844cd948d9dbe4bb9597455a84a399, type: 2}
   <NumberOfAttacks>k__BackingField: 3
   <ComponentData>k__BackingField:
@@ -28,6 +31,7 @@ MonoBehaviour:
       type: {class: MovementData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
         name: MovementData
+        repeatData: 0
         attackData:
         - name: Attack 1
           <Direction>k__BackingField: {x: 1, y: 0}
@@ -42,6 +46,7 @@ MonoBehaviour:
       type: {class: ActionHitBoxData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
         name: ActionHitBoxData
+        repeatData: 0
         attackData:
         - name: Attack 1
           Debug: 0
@@ -74,6 +79,7 @@ MonoBehaviour:
       type: {class: DamageData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
         name: DamageData
+        repeatData: 0
         attackData:
         - name: Attack 1
           <Amount>k__BackingField: 5
@@ -85,6 +91,7 @@ MonoBehaviour:
       type: {class: KnockBackData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
         name: KnockBackData
+        repeatData: 0
         attackData:
         - name: Attack 1
           <Angle>k__BackingField: {x: 1, y: 1}
@@ -99,6 +106,7 @@ MonoBehaviour:
       type: {class: PoiseDamageData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
         name: PoiseDamageData
+        repeatData: 0
         attackData:
         - name: Attack 1
           <Amount>k__BackingField: 10
@@ -110,11 +118,17 @@ MonoBehaviour:
       type: {class: WeaponSpriteData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
         name: WeaponSpriteData
+        repeatData: 0
         attackData:
         - name: Attack 1
           <PhaseSprites>k__BackingField:
-          - <Phase>k__BackingField: 0
-            <Sprites>k__BackingField: []
+          - <Phase>k__BackingField: 2
+            <Sprites>k__BackingField:
+            - {fileID: -1593533843, guid: ebf2b28dc28ca95438b6e510aa6041ff, type: 3}
+            - {fileID: -1505395369, guid: ebf2b28dc28ca95438b6e510aa6041ff, type: 3}
+            - {fileID: 1662931857, guid: ebf2b28dc28ca95438b6e510aa6041ff, type: 3}
+            - {fileID: 708008243, guid: ebf2b28dc28ca95438b6e510aa6041ff, type: 3}
+            - {fileID: 977310791, guid: ebf2b28dc28ca95438b6e510aa6041ff, type: 3}
         - name: Attack 2
           <PhaseSprites>k__BackingField:
           - <Phase>k__BackingField: 2

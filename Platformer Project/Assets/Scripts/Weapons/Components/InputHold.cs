@@ -49,14 +49,14 @@ namespace Platformer.Weapons.Components
             anim = GetComponentInChildren<Animator>();
             
             weapon.OnCurrentInputChange += HandleCurrentInputChange;
-            eventHandler.OnMinHoldPassed += HandleMinHoldPassed;
+            AnimationEventHandler.OnMinHoldPassed += HandleMinHoldPassed;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
             weapon.OnCurrentInputChange -= HandleCurrentInputChange;
-            eventHandler.OnMinHoldPassed -= HandleMinHoldPassed;
+            AnimationEventHandler.OnMinHoldPassed -= HandleMinHoldPassed;
         }
     }
 }

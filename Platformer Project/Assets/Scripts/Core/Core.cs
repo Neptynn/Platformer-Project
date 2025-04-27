@@ -8,12 +8,12 @@ namespace Platformer.CoreSystem
     public class Core : MonoBehaviour
     {
 
-
+        [field: SerializeField] public GameObject Root { get; private set; }
         private readonly List<CoreComponent> CoreComponents = new List<CoreComponent>();
 
         private void Awake()
         {
-
+            Root = Root ? Root : transform.parent.gameObject;
         }
 
         public void LogicUpdate()

@@ -12,10 +12,10 @@ namespace Platformer
         
         public MainMenu mainMenu;
         
-        protected Core core;
+        protected CoreSystem.Core core;
         protected virtual void Awake()
         {
-            core = transform.parent.GetComponent<Core>();
+            core = transform.parent.GetComponent<CoreSystem.Core>();
 
             if (core == null )
             {

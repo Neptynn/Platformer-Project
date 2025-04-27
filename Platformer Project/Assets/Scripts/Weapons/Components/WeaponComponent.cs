@@ -8,19 +8,20 @@ namespace Platformer.Weapons.Components
     {
         protected Weapon weapon;
 
-        //protected AnimationEventHandler EventHandler => weapon.EventHandler;
-        protected AnimationEventHandler eventHandler;
-        protected Core Core => weapon.Core;
-        
+        protected AnimationEventHandler AnimationEventHandler => weapon.EventHandler;
+        protected CoreSystem.Core Core => weapon.Core;
+        protected float attackStartTime => weapon.AttackStartTime;
+
         protected bool isAttackActive;
-        
-        public virtual void Init(){}
+
+        public virtual void Init()
+        {
+            
+        }
         
         protected virtual void Awake()
         {
             weapon = GetComponent<Weapon>();
-
-            eventHandler = GetComponentInChildren<AnimationEventHandler>();
         }
 
         protected virtual void Start()
@@ -38,7 +39,6 @@ namespace Platformer.Weapons.Components
         {
             isAttackActive = false;
         }
-        
 
         protected virtual void OnDestroy()
         {
@@ -56,7 +56,7 @@ namespace Platformer.Weapons.Components
         {
             base.HandleEnter();
 
-            currentAttackData = data.AttackData[weapon.CurrentAttackCounter];
+            currentAttackData = data.GetAttackData(weapon.CurrentAttackCounter);
         }
 
         public override void Init()

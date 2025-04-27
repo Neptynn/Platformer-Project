@@ -3,14 +3,15 @@ using System;
 
 namespace Platformer.CoreSystem
 {
-    public class Movement : CoreComponent
+ public class Movement : CoreComponent
     {
-        public Rigidbody2D RB {  get; private set; }
+        public Rigidbody2D RB { get; private set; }
 
-        public Vector2 CurrentVelocity {  get; private set; } 
         public int FacingDirection { get; private set; }
+
         public bool CanSetVelocity { get; set; }
-    
+
+        public Vector2 CurrentVelocity { get; private set; }
 
         private Vector2 workspace;
 
@@ -28,12 +29,12 @@ namespace Platformer.CoreSystem
         {
             CurrentVelocity = RB.velocity;
         }
-        
+
         #region Set Functions
 
         public void SetVelocityZero()
         {
-            workspace = Vector2.zero;
+            workspace = Vector2.zero;        
             SetFinalVelocity();
         }
 
@@ -55,6 +56,7 @@ namespace Platformer.CoreSystem
             workspace.Set(velocity, CurrentVelocity.y);
             SetFinalVelocity();
         }
+
         public void SetVelocityY(float velocity)
         {
             workspace.Set(CurrentVelocity.x, velocity);
@@ -63,12 +65,11 @@ namespace Platformer.CoreSystem
 
         private void SetFinalVelocity()
         {
-            if(CanSetVelocity)
+            if (CanSetVelocity)
             {
                 RB.velocity = workspace;
                 CurrentVelocity = workspace;
-            }
-
+            }        
         }
 
         public void CheckIfShouldFlip(int xInput)
@@ -82,11 +83,17 @@ namespace Platformer.CoreSystem
         public void Flip()
         {
             FacingDirection *= -1;
-            RB.transform.Rotate(0.0f, 180f, 0.0f);
+            RB.transform.Rotate(0.0f, 180.0f, 0.0f);
+        }
+        
+        public Vector2 FindRelativePoint(Vector2 offset)
+        {
+            offset.x *= FacingDirection;
+
+            return transform.position + (Vector3)offset;
         }
 
         #endregion
-        
     }
     
 }

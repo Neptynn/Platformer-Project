@@ -4,32 +4,36 @@ using Platformer.CoreSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerGroundedStates : PlayerState
+public class PlayerGroundedState : PlayerState
 {
     protected int xInput;
     protected int yInput;
 
     protected bool isTouchingCeiling;
 
-    protected Movement Movement 
-    { 
-        get => movement ??= core.GetCoreComponent<Movement>(); 
+    protected Movement Movement
+    {
+        get => movement ?? core.GetCoreComponent(ref movement);
     }
+
     private Movement movement;
 
     private CollisionSenses CollisionSenses
     {
-        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();       
+        get => collisionSenses ?? core.GetCoreComponent(ref collisionSenses);
     }
+
     private CollisionSenses collisionSenses;
 
     private bool jumpInput;
     private bool grabInput;
     private bool isGrounded;
     private bool isTouchingWall;
-    private bool isTouchingLadge;
+    private bool isTouchingLedge;
     private bool dashInput;
-    public PlayerGroundedStates(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+
+    public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData,
+        string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -41,7 +45,7 @@ public class PlayerGroundedStates : PlayerState
         {
             isGrounded = CollisionSenses.Ground;
             isTouchingWall = CollisionSenses.WallFront;
-            isTouchingLadge = CollisionSenses.LedgeHorisonal;
+            isTouchingLedge = CollisionSenses.LedgeHorizontal;
             isTouchingCeiling = CollisionSenses.Ceiling;
         }
     }
@@ -50,7 +54,7 @@ public class PlayerGroundedStates : PlayerState
     {
         base.Enter();
 
-        player.JumpState.ResetAmountOfJumpLeft();
+        player.JumpState.ResetAmountOfJumpsLeft();
         player.DashState.ResetCanDash();
     }
 
@@ -69,11 +73,11 @@ public class PlayerGroundedStates : PlayerState
         grabInput = player.InputHandler.GrabInput;
         dashInput = player.InputHandler.DashInput;
 
-        if (player.InputHandler.AttackInputs[(int)CombatInputs.primary] && !isTouchingCeiling)
+        if (player.InputHandler.AttackInputs[(int)CombatInputs.primary] && !isTouchingCeiling && player.PrimaryAttackState.CanTransitionToAttackState())
         {
             stateMachine.ChangeState(player.PrimaryAttackState);
         }
-        else if (player.InputHandler.AttackInputs[(int)CombatInputs.secondary] && !isTouchingCeiling)
+        else if (player.InputHandler.AttackInputs[(int)CombatInputs.secondary] && !isTouchingCeiling && player.SecondaryAttackState.CanTransitionToAttackState())
         {
             stateMachine.ChangeState(player.SecondaryAttackState);
         }
@@ -86,7 +90,7 @@ public class PlayerGroundedStates : PlayerState
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         }
-        else if (isTouchingWall && grabInput && isTouchingLadge)
+        else if (isTouchingWall && grabInput && isTouchingLedge)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }

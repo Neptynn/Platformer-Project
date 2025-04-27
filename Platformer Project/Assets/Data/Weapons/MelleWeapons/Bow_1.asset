@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59b1d7cbfe94bb18b99c116b7f4c43c, type: 3}
   m_Name: Bow_1
   m_EditorClassIdentifier: 
+  <Icon>k__BackingField: {fileID: 1819778140, guid: 7698f902a8e73cb4b88c4738f7fb0ff5, type: 3}
+  <Name>k__BackingField: Bow
+  <Description>k__BackingField: Bow
   <AnimatorController>k__BackingField: {fileID: 9100000, guid: d087a0aa9903dfc44a789ff24a97d5ed, type: 2}
   <NumberOfAttacks>k__BackingField: 1
   <ComponentData>k__BackingField:
   - rid: 4545688435959529473
+  - rid: 4545688464565207040
+  - rid: 4545688464565207041
+  - rid: 4545688464565207042
   references:
     version: 2
     RefIds:
@@ -23,6 +29,7 @@ MonoBehaviour:
       type: {class: WeaponSpriteData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
         name: WeaponSpriteData
+        repeatData: 0
         attackData:
         - name: Attack 1
           <PhaseSprites>k__BackingField:
@@ -39,3 +46,25 @@ MonoBehaviour:
             - {fileID: 1092771143, guid: f3587b6953001624389cefb03b513567, type: 3}
             - {fileID: -1678746768, guid: f3587b6953001624389cefb03b513567, type: 3}
             - {fileID: 1761313206, guid: f3587b6953001624389cefb03b513567, type: 3}
+    - rid: 4545688464565207040
+      type: {class: InputHoldData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
+      data:
+        name: InputHoldData
+    - rid: 4545688464565207041
+      type: {class: OptionalSpriteData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
+      data:
+        name: OptionalSpriteData
+        repeatData: 0
+        attackData:
+        - name: Attack 1
+          <UseOptionalSprite>k__BackingField: 1
+          <Sprite>k__BackingField: {fileID: 1792773364, guid: e4a62325699fe804ab6287c80b8bed17, type: 3}
+    - rid: 4545688464565207042
+      type: {class: MovementData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
+      data:
+        name: MovementData
+        repeatData: 0
+        attackData:
+        - name: Attack 1
+          <Direction>k__BackingField: {x: 0, y: 0}
+          <Velocity>k__BackingField: 0

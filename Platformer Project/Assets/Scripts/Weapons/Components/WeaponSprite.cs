@@ -57,7 +57,7 @@ namespace Platformer.Weapons.Components
             
             baseSpriteRenderer.RegisterSpriteChangeCallback(HandleBaseSpriteChange);
 
-            eventHandler.OnEnterAttackPhase += HandleEnterAttackPhase;
+            AnimationEventHandler.OnEnterAttackPhase += HandleEnterAttackPhase;
         }
         
         protected override void OnDestroy()
@@ -66,7 +66,7 @@ namespace Platformer.Weapons.Components
             
             baseSpriteRenderer.UnregisterSpriteChangeCallback(HandleBaseSpriteChange);
             
-            eventHandler.OnEnterAttackPhase -= HandleEnterAttackPhase;
+            AnimationEventHandler.OnEnterAttackPhase -= HandleEnterAttackPhase;
         }
     }
 

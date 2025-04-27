@@ -6,13 +6,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    public event Action<bool> OnInteractInputChanged; 
+
     private PlayerInput playerInput;
     private Camera cam;
 
-    public Vector2 RawMovementInput {  get; private set; }
+    public Vector2 RawMovementInput { get; private set; }
     public Vector2 RawDashDirectionInput { get; private set; }
     public Vector2Int DashDirectionInput { get; private set; }
-
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
@@ -26,7 +27,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool SaveInput { get; private set; }
     public bool LoadInput { get; private set; }
     
-
+    
     [SerializeField]
     private float inputHoldTime = 0.2f;
 
@@ -49,31 +50,45 @@ public class PlayerInputHandler : MonoBehaviour
         CheckDashInputHoldTime();
     }
 
-    public void OnPrimaryAttack(InputAction.CallbackContext context)
+    public void OnInteractInput(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
+        {
+            OnInteractInputChanged?.Invoke(true);
+            return;
+        }
+
+        if (context.canceled)
+        {
+            OnInteractInputChanged?.Invoke(false);
+        }
+    }
+
+    public void OnPrimaryAttackInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
         {
             AttackInputs[(int)CombatInputs.primary] = true;
         }
-        if(context.canceled)
+
+        if (context.canceled)
         {
             AttackInputs[(int)CombatInputs.primary] = false;
         }
     }
 
-    public void OnSecondaryAttack(InputAction.CallbackContext context)
+    public void OnSecondaryAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
             AttackInputs[(int)CombatInputs.secondary] = true;
         }
+
         if (context.canceled)
         {
             AttackInputs[(int)CombatInputs.secondary] = false;
         }
     }
-    
-    
     public void OnSave(InputAction.CallbackContext context)
     {
         if(context.started)
@@ -97,24 +112,25 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
     
-    
-
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         RawMovementInput = context.ReadValue<Vector2>();
 
         NormInputX = Mathf.RoundToInt(RawMovementInput.x);
-        NormInputY = Mathf.RoundToInt(RawMovementInput.y);
+        NormInputY = Mathf.RoundToInt(RawMovementInput.y);       
+        
     }
+
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             JumpInput = true;
             JumpInputStop = false;
             jumpInputStartTime = Time.time;
         }
-        if(context.canceled)
+
+        if (context.canceled)
         {
             JumpInputStop = true;
         }
@@ -122,32 +138,32 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnGrabInput(InputAction.CallbackContext context)
     {
-        if(context.started)
-        { 
-            GrabInput = true; 
+        if (context.started)
+        {
+            GrabInput = true;
         }
-        if(context.canceled)
+
+        if (context.canceled)
         {
             GrabInput = false;
         }
-
     }
 
     public void OnDashInput(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             DashInput = true;
             DashInputStop = false;
             dashInputStartTime = Time.time;
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             DashInputStop = true;
         }
     }
 
-    public void  OnDashDirectionInput(InputAction.CallbackContext context)
+    public void OnDashDirectionInput(InputAction.CallbackContext context)
     {
         RawDashDirectionInput = context.ReadValue<Vector2>();
 
@@ -163,6 +179,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void UseDashInput() => DashInput = false;
 
+    /// <summary>
+    /// Used to set the specific attack input back to false. Usually passed through the player attack state from an animation event.
+    /// </summary>
+    public void UseAttackInput(int i) => AttackInputs[i] = false;
+
     private void CheckJumpInputHoldTime()
     {
         if(Time.time >= jumpInputStartTime + inputHoldTime)
@@ -170,6 +191,7 @@ public class PlayerInputHandler : MonoBehaviour
             JumpInput = false;
         }
     }
+
     private void CheckDashInputHoldTime()
     {
         if(Time.time >= dashInputStartTime + inputHoldTime)
@@ -177,7 +199,6 @@ public class PlayerInputHandler : MonoBehaviour
             DashInput = false;
         }
     }
-
 }
 
 public enum CombatInputs
