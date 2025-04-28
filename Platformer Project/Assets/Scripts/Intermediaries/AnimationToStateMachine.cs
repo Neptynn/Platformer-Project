@@ -8,10 +8,10 @@ public class AnimationToStateMachine : MonoBehaviour
 
     private void TriggerAttack()
     {
-        attackState.TrigerAttack();
+        attackState.TriggerAttack();
     }
     private void FinishedAttack()
     {
-        attackState.FinishAttacking();
+        attackState.FinishAttack();
     }
 }

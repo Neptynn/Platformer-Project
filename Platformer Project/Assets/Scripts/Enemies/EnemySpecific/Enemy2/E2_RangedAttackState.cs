@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class E2_RangeAttackState : RangeAttackState
+public class E2_RangedAttackState : RangedAttackState
 {
     private Enemy2 enemy;
-    public E2_RangeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_RangeAttackState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, attackPosition, stateData)
+
+    public E2_RangedAttackState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_RangedAttackState stateData, Enemy2 enemy) : base(etity, stateMachine, animBoolName, attackPosition, stateData)
     {
         this.enemy = enemy;
     }
@@ -25,18 +26,18 @@ public class E2_RangeAttackState : RangeAttackState
         base.Exit();
     }
 
-    public override void FinishAttacking()
+    public override void FinishAttack()
     {
-        base.FinishAttacking();
+        base.FinishAttack();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if(isAnimationFinished)
+        if (isAnimationFinished)
         {
-            if(isPlayerInMinAgroRange)
+            if (isPlayerInMinAgroRange)
             {
                 stateMachine.ChangeState(enemy.playerDetectedState);
             }
@@ -52,8 +53,8 @@ public class E2_RangeAttackState : RangeAttackState
         base.PhysicsUpdate();
     }
 
-    public override void TrigerAttack()
+    public override void TriggerAttack()
     {
-        base.TrigerAttack();
+        base.TriggerAttack();
     }
 }

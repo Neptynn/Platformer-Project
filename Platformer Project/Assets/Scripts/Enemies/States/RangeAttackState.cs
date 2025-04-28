@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.Projectiles;
 using UnityEngine;
 
-public class RangeAttackState : AttackState
+public class RangedAttackState : AttackState
 {
-    protected D_RangeAttackState stateData;
+    protected D_RangedAttackState stateData;
 
     protected GameObject projectile;
-    private Projectile projectileScript;
+    protected Projectile projectileScript;
 
-    public RangeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_RangeAttackState stateData) : base(entity, stateMachine, animBoolName, attackPosition)
+    public RangedAttackState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_RangedAttackState stateData) : base(etity, stateMachine, animBoolName, attackPosition)
     {
         this.stateData = stateData;
     }
@@ -29,9 +30,9 @@ public class RangeAttackState : AttackState
         base.Exit();
     }
 
-    public override void FinishAttacking()
+    public override void FinishAttack()
     {
-        base.FinishAttacking();
+        base.FinishAttack();
     }
 
     public override void LogicUpdate()
@@ -44,12 +45,12 @@ public class RangeAttackState : AttackState
         base.PhysicsUpdate();
     }
 
-    public override void TrigerAttack()
+    public override void TriggerAttack()
     {
-        base.TrigerAttack();
- 
+        base.TriggerAttack();
+
         projectile = GameObject.Instantiate(stateData.projectile, attackPosition.position, attackPosition.rotation);
         projectileScript = projectile.GetComponent<Projectile>();
-        projectileScript.FireProdjictile(stateData.projectileSpeed, stateData.projectileTravelDistance, stateData.projectileDamage);
+        projectileScript.FireProjectile(stateData.projectileSpeed, stateData.projectileTravelDistance, stateData.projectileDamage);
     }
 }

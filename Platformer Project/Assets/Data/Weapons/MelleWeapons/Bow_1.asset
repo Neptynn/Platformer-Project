@@ -22,6 +22,7 @@ MonoBehaviour:
   - rid: 4545688464565207040
   - rid: 4545688464565207041
   - rid: 4545688464565207042
+  - rid: 4545688487471611904
   references:
     version: 2
     RefIds:
@@ -68,3 +69,23 @@ MonoBehaviour:
         - name: Attack 1
           <Direction>k__BackingField: {x: 0, y: 0}
           <Velocity>k__BackingField: 0
+    - rid: 4545688487471611904
+      type: {class: ProjectileSpawnerData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
+      data:
+        name: ProjectileSpawnerData
+        repeatData: 0
+        attackData:
+        - name: Attack 1
+          <SpawnInfos>k__BackingField:
+          - <Offset>k__BackingField: {x: 1.24, y: 0.2}
+            <Direction>k__BackingField: {x: 1, y: 0}
+            <ProjectilePrefab>k__BackingField: {fileID: 0}
+            <DamageData>k__BackingField:
+              <Amount>k__BackingField: 0
+            <KnockBackData>k__BackingField:
+              Strength: 0
+              Angle: {x: 0, y: 0}
+            <PoiseDamageData>k__BackingField:
+              <Amount>k__BackingField: 0
+            <SpriteDataPackage>k__BackingField:
+              <Sprite>k__BackingField: {fileID: 0}

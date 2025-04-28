@@ -56803,6 +56803,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1739852176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &788742614
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 117054183514669988, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 43128bf87935b2e4da1458a9b701a1be, type: 2}
+    - target: {fileID: 3402556628486040745, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1819778140, guid: 7698f902a8e73cb4b88c4738f7fb0ff5, type: 3}
+    - target: {fileID: 4339936964520162372, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_Name
+      value: WeaponPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.11567475
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738557062707085120, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0f73ec3103934545aa96c640d881cec, type: 3}
 --- !u!1 &789137171
 GameObject:
   m_ObjectHideFlags: 0
@@ -60338,7 +60403,7 @@ MonoBehaviour:
   stunStateData: {fileID: 11400000, guid: bc86025a58bdb5047a8f5440224d2cc4, type: 2}
   deadStateData: {fileID: 11400000, guid: 113429b9de55b5f41881f1a0ac94b77d, type: 2}
   dodgeStateData: {fileID: 11400000, guid: 10ef75fff89c97642a28d1fa962415b9, type: 2}
-  rangeAttackStateData: {fileID: 11400000, guid: dbd9e74ee87717743988688e676025cb, type: 2}
+  rangedAttackStateData: {fileID: 11400000, guid: dbd9e74ee87717743988688e676025cb, type: 2}
   meleeAttackPosition: {fileID: 375226537}
   rangedAttackPosition: {fileID: 464342497}
 --- !u!114 &1593841496
@@ -63190,4 +63255,5 @@ SceneRoots:
   - {fileID: 1159455039}
   - {fileID: 795485842}
   - {fileID: 133120554}
+  - {fileID: 788742614}
   - {fileID: 3361336524907557881}

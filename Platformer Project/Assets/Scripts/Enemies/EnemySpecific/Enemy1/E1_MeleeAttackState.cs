@@ -6,7 +6,7 @@ public class E1_MeleeAttackState : MeleeAttackState
 {
     private Enemy1 enemy;
 
-    public E1_MeleeAttackState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttack stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, attackPosition, stateData)
+    public E1_MeleeAttackState(Entity etity, FiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_MeleeAttack stateData, Enemy1 enemy) : base(etity, stateMachine, animBoolName, attackPosition, stateData)
     {
         this.enemy = enemy;
     }
@@ -26,16 +26,16 @@ public class E1_MeleeAttackState : MeleeAttackState
         base.Exit();
     }
 
-    public override void FinishAttacking()
+    public override void FinishAttack()
     {
-        base.FinishAttacking();
+        base.FinishAttack();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if(isAnimationFinished)
+        if (isAnimationFinished)
         {
             if (isPlayerInMinAgroRange)
             {
@@ -53,8 +53,8 @@ public class E1_MeleeAttackState : MeleeAttackState
         base.PhysicsUpdate();
     }
 
-    public override void TrigerAttack()
+    public override void TriggerAttack()
     {
-        base.TrigerAttack();
+        base.TriggerAttack();
     }
 }

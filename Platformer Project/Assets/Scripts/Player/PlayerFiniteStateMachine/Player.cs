@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.Core.CoreComponens;
 using Platformer.CoreSystem;
 using Platformer.Weapons;
 using Unity.VisualScripting;
@@ -8,16 +9,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region State Variables
-    public PlayerStateMachine StateMachine {  get; private set; }
+    public PlayerStateMachine StateMachine { get; private set; }
+
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
     public PlayerLandState LandState { get; private set; }
-    public PlayerWallSlideState WallSlideState { get; private set;}
-    public PlayerWallGrabState WallGrabState { get; private set;}
+    public PlayerWallSlideState WallSlideState { get; private set; }
+    public PlayerWallGrabState WallGrabState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
-    public PlayerWallJumpState WallJumpState { get; private set;}
+    public PlayerWallJumpState WallJumpState { get; private set; }
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
     public PlayerDashState DashState { get; private set; }
     public PlayerCrouchIdleState CrouchIdleState { get; private set; }
@@ -25,14 +27,13 @@ public class Player : MonoBehaviour
     public PlayerAttackState PrimaryAttackState { get; private set; }
     public PlayerAttackState SecondaryAttackState { get; private set; }
 
-    
+    //public PlayerStunState PlayerStunState { get; private set; }
+
     [SerializeField]
     private PlayerData playerData;
-
     #endregion
 
     #region Components
-
     public Core Core { get; private set; }
     public Animator Anim { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
@@ -40,23 +41,23 @@ public class Player : MonoBehaviour
     public Transform DashDirectionIndicator { get; private set; }
     public BoxCollider2D MovementCollider { get; private set; }
 
-
+    public Stats Stats { get; private set; }
+    
+    public InteractableDetector InteractableDetector { get; private set; }
     #endregion
 
-    #region Other Variables
+    #region Other Variables         
 
     private Vector2 workspace;
 
     private Weapon primaryWeapon;
     private Weapon secondaryWeapon;
+    
     #endregion
 
     #region Unity Callback Functions
     private void Awake()
     {
-        PlayerPrefs.DeleteKey("Points");
-        PlayerPrefs.DeleteKey("ReducePoints");
-        
         Core = GetComponentInChildren<Core>();
 
         primaryWeapon = transform.Find("PrimaryWeapon").GetComponent<Weapon>();
@@ -64,6 +65,9 @@ public class Player : MonoBehaviour
         
         primaryWeapon.SetCore(Core);
         secondaryWeapon.SetCore(Core);
+
+        Stats = Core.GetCoreComponent<Stats>();
+        InteractableDetector = Core.GetCoreComponent<InteractableDetector>();
         
         StateMachine = new PlayerStateMachine();
 
@@ -82,17 +86,29 @@ public class Player : MonoBehaviour
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
         PrimaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack", primaryWeapon, CombatInputs.primary);
         SecondaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack", secondaryWeapon, CombatInputs.secondary);
+        //PlayerStunState = new PlayerStunState(this, StateMachine, playerData, "stun");
     }
 
     private void Start()
     {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
+
+        InputHandler.OnInteractInputChanged += InteractableDetector.TryInteract;
+        
         RB = GetComponent<Rigidbody2D>();
         DashDirectionIndicator = transform.Find("DashDirectionIndicator");
         MovementCollider = GetComponent<BoxCollider2D>();
 
+        Stats.Poise.OnCurrentValueZero += HandlePoiseCurrentValueZero;
+        
         StateMachine.Initialize(IdleState);
+    }
+
+    private void HandlePoiseCurrentValueZero()
+    {
+        //StateMachine.ChangeState(PlayerStunState);
+        // TODO: PlayerStunState
     }
 
     private void Update()
@@ -105,25 +121,31 @@ public class Player : MonoBehaviour
     {
         StateMachine.CurrentState.PhysicsUpdate();
     }
+
+    private void OnDestroy()
+    {
+        Stats.Poise.OnCurrentValueZero -= HandlePoiseCurrentValueZero;
+    }
+
     #endregion
 
-    #region Other Function
-    
+    #region Other Functions
+
     public void SetColliderHeight(float height)
     {
         Vector2 center = MovementCollider.offset;
         workspace.Set(MovementCollider.size.x, height);
 
-        center.y += (height - MovementCollider.size.y) / 2; 
+        center.y += (height - MovementCollider.size.y) / 2;
 
         MovementCollider.size = workspace;
         MovementCollider.offset = center;
-    }
+    }   
 
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
 
-    private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+    private void AnimtionFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 
-
+   
     #endregion
 }

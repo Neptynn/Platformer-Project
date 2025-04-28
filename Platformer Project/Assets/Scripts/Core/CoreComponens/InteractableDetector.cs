@@ -21,6 +21,8 @@ namespace Platformer.Core.CoreComponens
         [ContextMenu("TryInteract")]
         public void TryInteract(bool inputValue)
         {
+            Debug.Log("TryInteract");
+            Debug.Log("inputValue " + inputValue);
             if(!inputValue || closestInteractable is null)
                 return;
             

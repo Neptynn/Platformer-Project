@@ -54,6 +54,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
+            Debug.Log("Interact");
             OnInteractInputChanged?.Invoke(true);
             return;
         }
@@ -68,6 +69,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (context.started)
         {
+            Debug.Log("Attack");
             AttackInputs[(int)CombatInputs.primary] = true;
         }
 

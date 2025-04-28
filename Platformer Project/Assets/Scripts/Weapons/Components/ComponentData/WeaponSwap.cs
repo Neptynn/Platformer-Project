@@ -20,6 +20,7 @@ namespace Platformer.Weapons.Components
 
         private void HandleTryInteract(IInteractable interactable)
         {
+            
             if (interactable is not WeaponPickup pickup)
                 return;
 

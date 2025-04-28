@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Platformer.Combat.Damage;
+using UnityEngine;
 
 namespace Platformer.CoreSystem
 {
@@ -9,10 +10,10 @@ namespace Platformer.CoreSystem
         private Stats stats;
         private ParticleManager particleManager;
         
-        public void Damage(float amount)
+        public void Damage(DamageData amount)
         {
             //Debug.Log(core.transform.parent.name + " Damaged!");
-            stats.Health.Decrease(amount);
+            stats.Health.Decrease(amount.Amount);
             particleManager.StartParticlesWithRandomRotation(damageParticles);
         }
 

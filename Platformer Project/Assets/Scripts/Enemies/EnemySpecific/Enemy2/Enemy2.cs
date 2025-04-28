@@ -2,22 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Enemy2 : Entity
-{
+{   
     public E2_MoveState moveState { get; private set; }
     public E2_IdleState idleState { get; private set; }
     public E2_PlayerDetectedState playerDetectedState { get; private set; }
     public E2_MeleeAttackState meleeAttackState { get; private set; }
-    public E2_LookForPlayerState lookForPlayerState { get; private set;}
+    public E2_LookForPlayerState lookForPlayerState { get; private set; }
     public E2_StunState stunState { get; private set; }
     public E2_DeadState deadState { get; private set; }
-    public E2_DodgeState dodgeState { get; private set;}
-    public E2_RangeAttackState rangeAttackState { get; private set; }
+    public E2_DodgeState dodgeState { get; private set; }
+    public E2_RangedAttackState rangedAttackState { get; private set; }
 
     [SerializeField]
     private D_MoveState moveStateData;
-    [SerializeField] 
+    [SerializeField]
     private D_IdleState idleStateData;
     [SerializeField]
     private D_PlayerDetected playerDetectedStateData;
@@ -32,13 +33,12 @@ public class Enemy2 : Entity
     [SerializeField]
     public D_DodgeState dodgeStateData;
     [SerializeField]
-    public D_RangeAttackState rangeAttackStateData;
+    private D_RangedAttackState rangedAttackStateData;
 
     [SerializeField]
-    private Transform
-        meleeAttackPosition,
-        rangedAttackPosition;
-    
+    private Transform meleeAttackPosition;
+    [SerializeField]
+    private Transform rangedAttackPosition;
 
     public override void Awake()
     {
@@ -52,8 +52,8 @@ public class Enemy2 : Entity
         stunState = new E2_StunState(this, stateMachine, "stun", stunStateData, this);
         deadState = new E2_DeadState(this, stateMachine, "dead", deadStateData, this);
         dodgeState = new E2_DodgeState(this, stateMachine, "dodge", dodgeStateData, this);
-        rangeAttackState = new E2_RangeAttackState(this, stateMachine, "rangedAttack", rangedAttackPosition, rangeAttackStateData, this);
-        
+        rangedAttackState = new E2_RangedAttackState(this, stateMachine, "rangedAttack", rangedAttackPosition, rangedAttackStateData, this);
+
         stats.Poise.OnCurrentValueZero += HandlePoiseZero;
     }
 
@@ -61,15 +61,16 @@ public class Enemy2 : Entity
     {
         stateMachine.ChangeState(stunState);
     }
-
-    private void Start()
-    {
-        stateMachine.Initialize(moveState);
-    }
+    
 
     private void OnDestroy()
     {
         stats.Poise.OnCurrentValueZero -= HandlePoiseZero;
+    }
+
+    private void Start()
+    {
+        stateMachine.Initialize(moveState);        
     }
 
     public override void OnDrawGizmos()
@@ -77,6 +78,5 @@ public class Enemy2 : Entity
         base.OnDrawGizmos();
 
         Gizmos.DrawWireSphere(meleeAttackPosition.position, meleeAttackStateData.attackRadius);
-
     }
 }
