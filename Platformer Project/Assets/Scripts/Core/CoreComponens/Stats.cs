@@ -40,7 +40,6 @@ namespace Platformer.CoreSystem
             if (PointData != null)
             {
                 Point.SetMaxValue(PointData.Point);
-                PointReduce.SetMaxValue(PointData.PointReduce);
             }
 
 
@@ -74,7 +73,6 @@ namespace Platformer.CoreSystem
     public interface IPointData
     {
         float Point { get; }
-        float PointReduce { get; }
     }
 
 

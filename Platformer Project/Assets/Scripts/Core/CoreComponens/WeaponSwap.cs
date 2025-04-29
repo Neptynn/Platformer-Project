@@ -1,10 +1,10 @@
 ﻿using System;
 using Platformer.Core.CoreComponens;
-using Platformer.CoreSystem;
 using Platformer.Interaction;
 using Platformer.Interaction.Interactables;
+using Platformer.Weapons;
 
-namespace Platformer.Weapons.Components
+namespace Platformer.CoreSystem
 {
  public class WeaponSwap : CoreComponent
     {

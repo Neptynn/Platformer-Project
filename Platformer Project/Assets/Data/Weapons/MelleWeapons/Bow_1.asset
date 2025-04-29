@@ -23,6 +23,8 @@ MonoBehaviour:
   - rid: 4545688464565207041
   - rid: 4545688464565207042
   - rid: 4545688487471611904
+  - rid: 4545688500767555584
+  - rid: 4545688500767555585
   references:
     version: 2
     RefIds:
@@ -59,7 +61,7 @@ MonoBehaviour:
         attackData:
         - name: Attack 1
           <UseOptionalSprite>k__BackingField: 1
-          <Sprite>k__BackingField: {fileID: 1792773364, guid: e4a62325699fe804ab6287c80b8bed17, type: 3}
+          <Sprite>k__BackingField: {fileID: 469599486, guid: cbcf3bd84a6c0724dbbb289ce667cbc3, type: 3}
     - rid: 4545688464565207042
       type: {class: MovementData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
       data:
@@ -79,13 +81,49 @@ MonoBehaviour:
           <SpawnInfos>k__BackingField:
           - <Offset>k__BackingField: {x: 1.24, y: 0.2}
             <Direction>k__BackingField: {x: 1, y: 0}
-            <ProjectilePrefab>k__BackingField: {fileID: 0}
+            <ProjectilePrefab>k__BackingField: {fileID: -8477030325213859818, guid: 43358226f9e82d64bbfed80889f2f02e, type: 3}
             <DamageData>k__BackingField:
-              <Amount>k__BackingField: 0
+              <Amount>k__BackingField: 15
             <KnockBackData>k__BackingField:
-              Strength: 0
-              Angle: {x: 0, y: 0}
+              Strength: 10
+              Angle: {x: 1, y: 1}
             <PoiseDamageData>k__BackingField:
-              <Amount>k__BackingField: 0
+              <Amount>k__BackingField: 5
             <SpriteDataPackage>k__BackingField:
-              <Sprite>k__BackingField: {fileID: 0}
+              <Sprite>k__BackingField: {fileID: -780757743, guid: cbcf3bd84a6c0724dbbb289ce667cbc3, type: 3}
+    - rid: 4545688500767555584
+      type: {class: DrawData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
+      data:
+        name: DrawData
+        repeatData: 0
+        attackData:
+        - name: Attack 1
+          <DrawCurve>k__BackingField:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 2
+              outSlope: 2
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          <DrawTime>k__BackingField: 0.266667
+    - rid: 4545688500767555585
+      type: {class: DrawToProjectileData, ns: Platformer.Weapons.Components, asm: Assembly-CSharp}
+      data:
+        name: DrawToProjectileData

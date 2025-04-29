@@ -1,11 +1,10 @@
-﻿using Platformer.CoreSystem;
+﻿using System;
+using Platformer.Core.CoreComponens;
 using Platformer.Interaction.Interactables;
 using Platformer.Weapons;
-using Platformer.Weapons.Components;
 using UnityEngine;
-using Movement = Platformer.CoreSystem.Movement;
 
-namespace Platformer.Core.CoreComponens
+namespace Platformer.CoreSystem
 {
     public class DiscardedWeaponPickupSpawner : CoreComponent
     {

@@ -11,6 +11,8 @@ namespace Platformer
 
         private void Awake()
         {
+            PlayerPrefs.DeleteAll();
+            
             player = GetComponent<Player>();
         }
 

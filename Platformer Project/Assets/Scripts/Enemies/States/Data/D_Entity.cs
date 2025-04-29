@@ -25,7 +25,6 @@ public class D_Entity : ScriptableObject, IHealthData, IPoiseData, IPointData
     public float closeRangeActionDistance = 1f;
 
     public float pointCost = 50f;
-    public float pointReduce = 10f;
 
     public GameObject hitParticle;
 
@@ -38,5 +37,5 @@ public class D_Entity : ScriptableObject, IHealthData, IPoiseData, IPointData
     public float Poise => stunResistance;
     public float PoiseRecoveryRate => stunRecoveryRate;
     public float Point => pointCost;
-    public float PointReduce => pointReduce;
+
 }

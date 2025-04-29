@@ -7,4 +7,10 @@ public class D_RangedAttackState : ScriptableObject
     public float projectileDamage = 10f;
     public float projectileSpeed = 12f;
     public float projectileTravelDistance;
+    
+    public Vector2 knockbackAngle = Vector2.one;
+    public float knockbackStrength = 10f;
+
+    public float poiseDamage;
+    public int reducePoints = 15;
 }

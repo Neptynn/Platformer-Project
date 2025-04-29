@@ -49,6 +49,9 @@ TagManager:
   - name: Decoration
     uniqueID: 1528629615
     locked: 0
+  - name: InactiveProjectile
+    uniqueID: 1449596669
+    locked: 0
   - name: Platforms
     uniqueID: 2365984861
     locked: 0
@@ -57,6 +60,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3169878685
+    locked: 0
+  - name: ActivePtogectile
+    uniqueID: 1270542459
     locked: 0
   - name: Foreground Decoration
     uniqueID: 3934247175

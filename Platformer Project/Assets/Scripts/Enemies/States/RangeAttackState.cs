@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Platformer.CoreSystem;
 using Platformer.Projectiles;
 using UnityEngine;
 
 public class RangedAttackState : AttackState
 {
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+    
     protected D_RangedAttackState stateData;
 
     protected GameObject projectile;
@@ -51,6 +58,6 @@ public class RangedAttackState : AttackState
 
         projectile = GameObject.Instantiate(stateData.projectile, attackPosition.position, attackPosition.rotation);
         projectileScript = projectile.GetComponent<Projectile>();
-        projectileScript.FireProjectile(stateData.projectileSpeed, stateData.projectileTravelDistance, stateData.projectileDamage);
+        projectileScript.FireProjectile(stateData.projectileSpeed, stateData.projectileTravelDistance, stateData.projectileDamage, stateData.knockbackAngle, stateData.knockbackStrength,  stateData.poiseDamage, stateData.reducePoints, Movement.FacingDirection);
     }
 }

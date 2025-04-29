@@ -12,14 +12,6 @@ public class MeleeAttackState : AttackState {
         get => movement ??= core.GetCoreComponent<Movement>();
     }
     private Movement movement;
-    private CollisionSenses CollisionSenses
-    {
-        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
-    }
-    private CollisionSenses collisionSenses;
-    
-    private Stats Stats  => stats ??= core.GetCoreComponent<Stats>(); 
-    private Stats stats;
 
     protected D_MeleeAttack stateData;
 
@@ -39,7 +31,7 @@ public class MeleeAttackState : AttackState {
                 damageable.Damage(new DamageData(stateData.attackDamage, core.Root));
                 
                 int reducePoints = PlayerPrefs.GetInt("ReducePoints", 0);
-                reducePoints -= (int)Stats.PointReduce.MaxValue;
+                reducePoints -= stateData.reducePoints;
                 PlayerPrefs.SetInt("ReducePoints", reducePoints);
                 PlayerPrefs.Save();
                 

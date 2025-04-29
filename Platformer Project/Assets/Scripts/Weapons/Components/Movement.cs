@@ -1,9 +1,10 @@
-﻿using Platformer.Weapons.Components;
+﻿using System;
+using Platformer.Weapons.Components;
 using UnityEngine;
 
 namespace Platformer.Weapons.Components
 {
-  public class Movement : WeaponComponent<MovementData, AttackMovement>
+    public class Movement : WeaponComponent<MovementData, AttackMovement>
     {
         private CoreSystem.Movement coreMovement;
 
@@ -71,4 +72,3 @@ namespace Platformer.Weapons.Components
         }
     }
 }
-

@@ -12,6 +12,7 @@ public class D_MeleeAttack : ScriptableObject
     public float knockbackStrength = 10f;
 
     public float PoiseDamage;
+    public int reducePoints = 10;
     
     public LayerMask whatIsPlayer;
 }

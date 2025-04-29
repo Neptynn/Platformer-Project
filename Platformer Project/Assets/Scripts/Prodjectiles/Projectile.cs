@@ -1,32 +1,35 @@
 using UnityEngine;
-
+using Platformer.Combat.Damage;
+using Platformer.Combat.KnockBack;
+using Platformer.Combat.PoiseDamage;
+using Platformer.CoreSystem;
 
 namespace Platformer.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
-        //private AttackDetails attackDetails;
-
+        
+        private float damage;
         private float speed;
         private float travelDistance;
         private float xStartPos;
-
-        [SerializeField]
-        private float gravity;
-        [SerializeField]
-        private float damageRadius;
+        private int reducePoints;
+        private Vector2 knockbackAngle;
+        private float knockbackStrength;
+        private float poiseDamage;
+        private int FacingDirection;
+        
+        [SerializeField] private float gravity;
+        [SerializeField] private float damageRadius;
 
         private Rigidbody2D rb;
 
         private bool isGravityOn;
         private bool hasHitGround;
 
-        [SerializeField]
-        private LayerMask whatIsGround;
-        [SerializeField]
-        private LayerMask whatIsPlayer;
-        [SerializeField]
-        private Transform damagePosition;
+        [SerializeField] private LayerMask whatIsGround;
+        [SerializeField] private LayerMask whatIsPlayer;
+        [SerializeField] private Transform damagePosition;
 
         private void Start()
         {
@@ -58,15 +61,37 @@ namespace Platformer.Projectiles
         {
             if (!hasHitGround)
             {
-                Collider2D damageHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsPlayer);
+                Collider2D[] damageHit = Physics2D.OverlapCircleAll(damagePosition.position, damageRadius, whatIsPlayer);
                 Collider2D groundHit = Physics2D.OverlapCircle(damagePosition.position, damageRadius, whatIsGround);
 
-                if (damageHit)
+                foreach (Collider2D collider in damageHit)
                 {
-                    //damageHit.transform.SendMessage("Damage", attackDetails);
-                    Destroy(gameObject);
-                }
+                    IDamageable damageable = collider.GetComponent<IDamageable>();
 
+                    if (damageable != null)
+                    {
+                        damageable.Damage(new DamageData(damage, collider.gameObject));
+                        Destroy(gameObject);
+                        
+                        int newPoints = PlayerPrefs.GetInt("ReducePoints", 0);
+                        newPoints -= reducePoints;
+                        PlayerPrefs.SetInt("ReducePoints", newPoints);
+                        PlayerPrefs.Save();
+                        
+                    }
+                    
+                    IKnockBackable knockBackable = collider.GetComponent<IKnockBackable>();
+
+                    if (knockBackable != null) {
+                        knockBackable.KnockBack(new KnockBackData(knockbackAngle, knockbackStrength, FacingDirection, collider.gameObject));
+                    }
+
+                    if (collider.TryGetComponent(out IPoiseDamageable poiseDamageable))
+                    {
+                        poiseDamageable.DamagePoise(new PoiseDamageData(poiseDamage, collider.gameObject));
+                    }
+                    
+                }
                 if (groundHit)
                 {
                     hasHitGround = true;
@@ -80,19 +105,26 @@ namespace Platformer.Projectiles
                     isGravityOn = true;
                     rb.gravityScale = gravity;
                 }
-            }        
+               
+            }
         }
 
-        public void FireProjectile(float speed, float travelDistance, float damage)
-        {
-            this.speed = speed;
-            this.travelDistance = travelDistance;
-            //attackDetails.damageAmount = damage;
-        }
+        public void FireProjectile(float speed, float travelDistance, float damage, Vector2 knockbackAngle, float knockbackStrength, float poiseDamage, int reducePoints, int FacingDirection)
+            {
+                this.speed = speed;
+                this.travelDistance = travelDistance;
+                this.damage = damage;
+                this.reducePoints = reducePoints;
+                this.knockbackAngle = knockbackAngle;
+                this.knockbackStrength = knockbackStrength;
+                this.poiseDamage = poiseDamage;
+                this.FacingDirection = FacingDirection;
+            }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
+            private void OnDrawGizmos()
+            {
+                Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
+            }
         }
     }
-}
+

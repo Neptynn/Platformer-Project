@@ -5,7 +5,7 @@ using Platformer.Interaction;
 using Platformer.Utilities;
 using UnityEngine;
 
-namespace Platformer.Core.CoreComponens
+namespace Platformer.CoreSystem
 {
 [RequireComponent(typeof(Collider2D))]
     public class InteractableDetector : CoreComponent
